@@ -9,7 +9,7 @@ import {JokeComponent} from './jokes/joke/joke.component';
 import {JokeListComponent} from './jokes/joke-list/joke-list.component';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import { CardHoverDirective } from './directives/card-hover.directive';
+import {CardHoverDirective} from './directives/card-hover.directive';
 
 @NgModule({
   declarations: [
@@ -29,4 +29,5 @@ import { CardHoverDirective } from './directives/card-hover.directive';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

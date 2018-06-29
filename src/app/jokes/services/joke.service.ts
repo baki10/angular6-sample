@@ -1,17 +1,31 @@
 import {Injectable} from '@angular/core';
 import {Joke} from '../joke';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 @Injectable()
 export class JokeService {
 
   jokes: Joke[];
 
-  constructor() {
-    this.jokes = [
-      new Joke('What did the cheese say when it looked in the mirror?', 'Hello-me (Halloumi)'),
-      new Joke('What kind of cheese do you use to disguise a small horse?', 'Mask-a-pony (Mascarpone)'),
-      new Joke('A kid threw a lump of cheddar at me', 'I thought ‘That’s not very mature’'),
-    ];
+  constructor(private http: HttpClient) {
+    this.getJokesFromBackend();
+  }
+
+  private getJokesFromBackend() {
+    this.jokes = [];
+    this.getJokes().subscribe(
+      values => {
+        for (let i = 0; i < values.length; i++) {
+          const joke = new Joke(values[i].setup, values[i].punchline);
+          this.addJoke(joke);
+        }
+      }
+    );
+  }
+
+  private getJokes(): Observable<any> {
+    return this.http.get('http://127.0.0.1:8080/jokes');
   }
 
   addJoke(joke) {
