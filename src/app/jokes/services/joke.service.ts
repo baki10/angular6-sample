@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Joke} from '../joke';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
 
 @Injectable()
 export class JokeService {
+
+  private apiUrl = 'http://127.0.0.1:8080/jokes';
 
   jokes: Joke[];
 
@@ -14,7 +15,8 @@ export class JokeService {
 
   private getJokesFromBackend() {
     this.jokes = [];
-    this.getJokes().subscribe(
+
+    this.http.get(this.apiUrl).subscribe(
       values => {
         for (let i = 0; i < values.length; i++) {
           const joke = new Joke(values[i].setup, values[i].punchline);
@@ -22,10 +24,6 @@ export class JokeService {
         }
       }
     );
-  }
-
-  private getJokes(): Observable<any> {
-    return this.http.get('http://127.0.0.1:8080/jokes');
   }
 
   addJoke(joke) {
