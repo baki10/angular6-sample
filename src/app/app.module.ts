@@ -9,6 +9,7 @@ import {JokeComponent} from './jokes/joke/joke.component';
 import {JokeListComponent} from './jokes/joke-list/joke-list.component';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
+import { CardHoverDirective } from './directives/card-hover.directive';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import {HttpClientModule} from '@angular/common/http';
     FooterComponent,
     JokeComponent,
     JokeListComponent,
-    JokeFormComponent
+    JokeFormComponent,
+    CardHoverDirective
   ],
   imports: [
     BrowserModule,

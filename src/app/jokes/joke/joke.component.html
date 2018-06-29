@@ -1,4 +1,4 @@
-<div class="card card-block">
+<div class="card card-block" appCardHover>
   <h4 class="card-title">
     {{joke.setup}}
   </h4>
@@ -9,6 +9,9 @@
      class="btn btn-warning">Tell Me
   </a>
   <a (click)="deleteItem()"
-     class="btn btn-danger">Delete
+     [ngClass]="{
+     'btn btn-success': !joke.hide,
+     'btn btn-danger': joke.hide
+     }">Delete
   </a>
 </div>
