@@ -10,6 +10,16 @@ import {JokeListComponent} from './jokes/joke-list/joke-list.component';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {CardHoverDirective} from './directives/card-hover.directive';
+import {HomeComponent} from './home/home.component';
+import {RouterModule, Routes} from '@angular/router';
+import { Error404Component } from './error404/error404.component';
+
+const routes: Routes = [
+  {path: '', redirectTo: 'home', pathMatch: 'full'},
+  {path: 'home', component: HomeComponent},
+  {path: 'jokes', component: JokeListComponent},
+  {path: '**', component: Error404Component}
+];
 
 @NgModule({
   declarations: [
@@ -19,12 +29,15 @@ import {CardHoverDirective} from './directives/card-hover.directive';
     JokeComponent,
     JokeListComponent,
     JokeFormComponent,
-    CardHoverDirective
+    CardHoverDirective,
+    HomeComponent,
+    Error404Component
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot(routes, {useHash: true})
   ],
   providers: [],
   bootstrap: [AppComponent]
