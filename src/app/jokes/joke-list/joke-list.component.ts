@@ -1,35 +1,27 @@
-import { Component, OnInit } from '@angular/core';
-import {Joke} from '../joke';
+import {Component} from '@angular/core';
+import {JokeService} from '../services/joke.service';
 
 @Component({
   selector: 'app-joke-list',
   templateUrl: './joke-list.component.html',
-  styleUrls: ['./joke-list.component.css']
+  styleUrls: ['./joke-list.component.css'],
+  providers: [JokeService]
 })
-export class JokeListComponent implements OnInit {
+export class JokeListComponent {
 
-  jokes: Joke[];
+  private jokeService: JokeService;
 
-  constructor() {
-    this.jokes = [
-      new Joke('What did the cheese say when it looked in the mirror?', 'Hello-me (Halloumi)'),
-      new Joke('What kind of cheese do you use to disguise a small horse?', 'Mask-a-pony (Mascarpone)'),
-      new Joke('A kid threw a lump of cheddar at me', 'I thought ‘That’s not very mature’'),
-    ];
+  constructor(jokeService: JokeService) {
+    this.jokeService = jokeService;
   }
 
   addJoke(joke) {
-    this.jokes.unshift(joke);
+    // Push new joke to the front
+    this.jokeService.addJoke(joke);
   }
 
   deleteJoke(joke) {
-    const indexToDelete = this.jokes.indexOf(joke);
-    if (indexToDelete !== -1) {
-      this.jokes.splice(indexToDelete, 1);
-    }
-  }
-
-  ngOnInit() {
+    this.jokeService.deleteJoke(joke);
   }
 
 }
