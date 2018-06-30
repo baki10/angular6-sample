@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Joke} from '../joke';
 import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 @Injectable()
 export class JokeService {
@@ -10,20 +11,23 @@ export class JokeService {
   jokes: Joke[];
 
   constructor(private http: HttpClient) {
+    this.initJokes();
     this.getJokesFromBackend();
   }
 
-  private getJokesFromBackend() {
+  private initJokes() {
     this.jokes = [];
-
-    this.http.get(this.apiUrl).subscribe(
+    this.getJokesFromBackend().subscribe(
       values => {
-        for (let i = 0; i < values.length; i++) {
-          const joke = new Joke(values[i].setup, values[i].punchline);
-          this.addJoke(joke);
+        for (const value of values) {
+          this.addJoke(new Joke(value.setup, value.punchline));
         }
       }
     );
+  }
+
+  private getJokesFromBackend(): Observable<any> {
+    return this.http.get(this.apiUrl);
   }
 
   addJoke(joke) {
